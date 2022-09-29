@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie-Show</title>
+    <style>
+        body {
+            background-color: #131a27;
+        }
+
+        #main {
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+        }
+
+        /* <!-- Starting of Navbar --> */
+        #navBar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto;
+            gap: 350px;
+            margin: 25px 70px;
+        }
+
+        #navLeft {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+        }
+
+        #navLeft>a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 19px;
+            text-align: left;
+        }
+
+        #navRight {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            cursor: pointer;
+            gap: 10px;
+
+        }
+
+        #navRight>a,
+        #input {
+            text-align: right;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 19px;
+
+        }
+
+        #search {
+            border-radius: 10px;
+            height: 28px;
+            width: 170px;
+        }
+
+        /* <!-- Ending of Navbar --> */
+
+        /* Starting of mainPoster */
+        #mainPoster {
+            width: 94%;
+            height: 420px;
+            margin: auto;
+        }
+
+        #mainPoster>img {
+            width: 100%;
+            height: 420px;
+        }
+
+        /* <!-- Poster of Screen End --> */
+
+        /* search-movie-list */
+        .mainDiv
+        {
+            display: flex;
+            
+            gap: 10px;
+            border: 2px solid black;
+            flex-direction: row-reverse;
+            justify-content: space-around;
+        }
+    
+        .searchContent{
+            color: white;
+        }
+        .searchRecommend{
+            color: #ffffff;
+        }
+        
+    
+     
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <!-- Starting of Navbar -->
+        <div id="navBar">
+            <div id="navLeft">
+                <a href="">TV</a>
+                <a href="">Movies</a>
+                <a href="">Sports</a>
+                <a href="">Disney+</a>
+                <a href="">KiDS</a>
+
+            </div>
+            <div id="navRight">
+                <input type="search" name="Search" id="search" placeholder="Search Movie Here">
+                <a id="submit" onclick="getData()">SUBMIT</a>
+                <a href="">LOGIN</a>
+            </div>
+        </div>
+        <!-- Ending of Navbar -->
+
+        <!-- Poster of Screen Start -->
+        <div id="mainPoster">
+            <img src="https://img1.hotstarext.com/image/upload/f_auto,t_web_m_1x/sources/r1/cms/prod/1885/1041885-h-041cc0cf8a92"
+                alt="" srcset="">
+        </div>
+        <!-- Poster of Screen End -->
+
+
+    </div>
+</body>
+
+</html>
+
+<script>
+    async function getData() {
+       
+            try {
+                var title = document.querySelector("#search").value;
+                console.log(title);
+                let res = await fetch(`https://www.omdbapi.com/?t=${title}&apikey=3292cffd`);
+                let data = await res.json();
+                console.log("data:", data);
+                // if (data.Response == true) {
+                    display(data);
+                // }
+                // else {
+                //     error();
+                // }
+            }
+            catch (err){
+                console.log("error");
+            }
+      
+    }
+
+    // function error() {
+    //     document.querySelector("#mainPoster").innerHTML = "";
+    //     var img = document.createElement("img");
+    //     img.src = 'https://c.tenor.com/NpZyGNG3SLEAAAAM/this-content-is-not-available.gif';
+    //     mainPoster.append(img);
+    // }
+    // search content showing
+    function display(movieData) {
+
+        document.querySelector("#mainPoster").innerHTML = "";
+        var moviePage = document.querySelector("#mainPoster");
+        // moviePage.setAttribute('class', 'poster');
+
+
+        
+   
+
+        var mainDiv = document.createElement("div");
+        mainDiv.setAttribute('class', 'mainDiv');
+
+        var div1 = document.createElement("div");
+        div1.setAttribute('class', 'searchPoster');
+
+        var div2 = document.createElement("div");
+        div2.setAttribute('class', 'searchContent');
+
+        var div3 = document.createElement("div");
+        div3.setAttribute('class', 'searchRecommend');
+
+
+        //     ata: 
+        // {Title: 'Bahubali', Year: '2008–2009', Rated: 'N/A', Released: '01 Apr 2008', Runtime: 'N/A', …}
+        // Actors: "Pankaj Tripathi, Mukesh Tiwari, Daya Shankar Pandey"
+        // Awards: "N/A"
+        // Country: "India"
+        // Director: "N/A"
+        // Genre: "Drama"
+        // Language: "Hindi"
+        // Metascore: "N/A"
+        // Plot: "Babhubali means a most powerful person, he can manage and control every situation and boss of the village."
+        // Poster: "https://m.media-amazon.com/images/M/MV5BNGU4NjRiMzAtNDQ4ZS00YmMyLTkzZTMtM2NiMmNiODZmZmUyXkEyXkFqcGdeQXVyMTY3MDU1MTI@._V1_SX300.jpg"
+        // Rated: "N/A"
+        // Ratings: Array(1)
+        // 0: {Source: 'Internet Movie Database', Value: '7.9/10'}
+        // length: 1
+        // [[Prototype]]: Array(0)
+        // Released: "01 Apr 2008"
+        // Response: "True"
+        // Runtime: "N/A"
+        // Title: "Bahubali"
+        // Type: "series"
+        // Writer: "N/A"
+        // Year: "2008–2009"
+        // imdbID: "tt4549714"
+        // imdbRating: "7.9"
+        // imdbVotes: "909"
+        // totalSeasons: "1"
+        // [[Prototype]]: Object
+        var movieImg = document.createElement("img");
+        movieImg.src = `${movieData.Poster}`;
+        // console.log(movieImg);
+
+
+        var movieTitle = document.createElement("h1");
+        movieTitle.innerText = `MovieTitle : ${movieData.Title}`;
+        // console.log(movieTitle);
+
+        var movieYear = document.createElement("h2");
+        movieYear.innerText = `ReleaseYear : ${movieData.Year}`;
+        // console.log(movieYear);
+
+        var movieReleased = document.createElement("h2");
+        movieReleased.innerText = `ReleaseDate : ${movieData.Released}`;
+        // console.log(movieReleased);
+
+        var movieRating = document.createElement("h2");
+        movieRating.innerText = `MovieRating : ${movieData.imdbRating}`;
+        // console.log(movieRating);
+
+        var movieActor = document.createElement("h2");
+        movieActor.innerText = `MovieActor : ${movieData.Actors}`;
+
+        var movieLanguage = document.createElement("h2");
+        movieLanguage.innerText = `MovieLanguage : ${movieData.Language}`;
+
+        var movieCountry = document.createElement("h2");
+        movieCountry.innerText = `Release-Country : ${movieData.Country}`;
+
+        var movieResponse = document.createElement("h2");
+        movieResponse.innerText = `MovieResponse : ${movieData.Response}`;
+
+        var movieType = document.createElement("h2");
+        movieType.innerText = `Movie-Response : ${movieData.Type}`;
+
+        if(movieData.imdbRating > 7.5)
+        {
+            var movieRecommend = document.createElement("h2");
+            movieRecommend.innerText = `Recommend-Movie`
+            div3.append(movieRecommend);
+        }
+
+        div1.append(movieImg);
+        div2.append(movieTitle, movieYear, movieReleased, movieRating,movieActor,movieLanguage,movieCountry,movieResponse,movieType);
+        /* console.log(div2); */
+        mainDiv.append(div1,div2);
+        moviePage.append(mainDiv,div3);
+
+    
+    }
+
+
+</script>
